@@ -1,9 +1,7 @@
-import { Button } from "./components/ui/button";
+import { TextInput } from "./components/ui/input";
 
 export default function Home() {
   return (
-    <Button>
-      Cadastre-se
-    </Button>
+    <TextInput placeholder="Email ou usuário"/>
   );
 }

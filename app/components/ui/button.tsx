@@ -12,9 +12,9 @@ export function Button({
   return (
     <button 
       {...props}
-      className={cn("py-4 w-full max-w-3xs text-white rounded-2xl font-bold whitespace-nowrap hover:opacity-95 disabled:opacity-70",
+      className={cn("py-4 w-full max-w-3xs text-white rounded-2xl font-bold whitespace-nowrap border border-Charade hover:opacity-95 disabled:opacity-70 cursor-pointer",
         variant === 'primary' && 'bg-white text-black',
-        variant === 'ghost' && 'bg-transparent',
+        variant === 'ghost' && 'bg-transparent border-2 border-Charade',
         variant === 'secondary' && 'bg-DarkBlue',
         props.className
       )}
