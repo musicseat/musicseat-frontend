@@ -11,7 +11,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED = '/sign-up'
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname 
   const publicRoute = publicRoutes.find(route => route.path === path)
-  const isAuthenticated = request.cookies.get('token') !== undefined 
+  const isAuthenticated = request.cookies.get('sessionCookie') !== undefined 
 
   if (!isAuthenticated && publicRoute) {
     return NextResponse.next()

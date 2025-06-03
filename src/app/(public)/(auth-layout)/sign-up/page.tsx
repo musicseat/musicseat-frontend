@@ -3,14 +3,46 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { api } from "@/lib/axios";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const signUpFormData = z.object({
+  name: z.string(),
+  email: z.string(),
+  password: z.string(),
+  passwordConfirm: z.string(),
+})
+.refine((data) => data.password === data.passwordConfirm, {
+  message: "As senhas não conferem",
+  path: ["passwordConfirm"],
+})
+
+type SignUpFormData = z.infer<typeof signUpFormData>
 
 export default function SignUp() {
-  const { register,  formState: {isSubmitting}, handleSubmit} = useForm()
 
-  function handleSignUp(data: unknown) {
-    console.log(data);
+  const { register,  formState: {isSubmitting, errors}, handleSubmit} = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpFormData),
+  })
+
+  async function handleSignUp(data: SignUpFormData) {
+    try {
+      
+      const req = await api.post('/sign-up', data);
+
+      console.log(req.data);
+      
+
+      console.log('Cadastro realizado com sucesso!');
+      
+      return
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -50,7 +82,7 @@ export default function SignUp() {
               <Label htmlFor="password">Crie uma senha</Label>
               <Input
                 id="password"
-                type="text"
+                type="password"
                 {...register('password')}
               />
             </div>
@@ -59,12 +91,17 @@ export default function SignUp() {
               <Label htmlFor="passwordConfirm">Confirme a senha</Label>
               <Input
                 id="passwordConfirm"
-                type="text"
+                type="password"
                 {...register('passwordConfirm')}
               />
+              {errors.passwordConfirm && (
+                <p className="text-sm text-rose-500 mt-1">
+                  {errors.passwordConfirm.message}
+                </p>
+              )}
             </div>
 
-            <Button disabled={isSubmitting} className="w-full" type="submit">
+            <Button disabled={isSubmitting} className="w-full cursor-pointer" type="submit">
               Finalizar cadastro
             </Button>
 
