@@ -51,12 +51,17 @@ export default function SignIn() {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center bg-[#1C1D21]">
       <div className="p-8">
         
-        <Button asChild className="absolute right-8 top-8" variant="ghost">
-          <Link href='/sign-up'>Novo usuário</Link>
-        </Button>
+        <div className="absolute  bottom-8 flex justify-between w-full max-w-[340px] text-muted-foreground">
+          <Label>
+            Não tem uma conta?
+          </Label>
+          <Button asChild variant="outline">
+            <Link href='/sign-up'>Cadastre-se</Link>
+          </Button>
+        </div>
 
         <div className="w-[340px] flex flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
@@ -64,32 +69,37 @@ export default function SignIn() {
             <p className="text-sm text-muted-foreground">Acompanhe as mais novas novidades do mundo da música</p>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}> 
-            <div className="space-y-2">
-              <Label htmlFor="email">Seu e-mail</Label>
-              <Input
-                id="email"
-                type="text"
-                {...register('email')}
-              />
-            </div>
+          <form className="space-y-6" onSubmit={handleSubmit(handleSignIn)}> 
+            <Input
+              className="!bg-transparent pl-0 pb-4 !border-t-0 !border-x-0 !rounded-none !shadow-none focus:border-c focus:!ring-0 focus:!outline-none focus-visible:!border-[#9C6FE4]/90"
+              placeholder="Seu e-mail"
+              id="email"
+              type="text"
+              {...register('email')}
+            />
             
-            <div className="space-y-2">
-              <Label htmlFor="password">Digite sua senha</Label>
+            <div className="">
               <Input
+                className="!bg-transparent pl-0 pb-4 !border-t-0 !border-x-0 !rounded-none !shadow-none focus:border-c focus:!ring-0 focus:!outline-none focus-visible:!border-[#9C6FE4]/90"
+                placeholder="Sua senha"
                 id="password"
                 type="text"
                 {...register('password')}
               />
             </div>
 
-            <Button disabled={isSubmitting} className="w-full cursor-pointer" type="submit">
+            <p>
+              <Link href='/forgot-password' className="text-sm leading-relaxed underline underline-offset-4 text-muted-foreground hover:text-[#9C6FE4]/90">
+                Esqueci minha senha
+              </Link>
+            </p>
+
+            <Button 
+              disabled={isSubmitting}
+              variant={"secondary"}
+              className="w-full cursor-pointer mt-6" type="submit">
               Entrar
             </Button>
-
-            <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
-              Ao continuar você concorda com nossos <Link href='' className="underline underline-offset-4">Termos de serviço</Link> e <Link href='' className="underline underline-offset-4">políticas de privacidade</Link>
-            </p>
           </form>
         </div>
 
