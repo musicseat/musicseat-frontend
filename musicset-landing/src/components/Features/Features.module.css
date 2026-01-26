@@ -1,0 +1,120 @@
+.features {
+  padding: 6rem 2rem;
+  background-color: var(--color-dark-green);
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+}
+
+.card {
+  background: rgba(0, 35, 16, 0.5);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  text-align: center;
+  border: 1px solid rgba(0, 255, 241, 0.1);
+  transition: all 0.4s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+  backdrop-filter: blur(10px);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(0, 255, 241, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 255, 241, 0.1);
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.iconWrapper.cyan {
+  background: linear-gradient(135deg, rgba(0, 255, 241, 0.2), rgba(0, 255, 241, 0.05));
+  box-shadow: 0 8px 24px rgba(0, 255, 241, 0.2);
+}
+
+.iconWrapper.orange {
+  background: linear-gradient(135deg, rgba(255, 92, 0, 0.2), rgba(255, 92, 0, 0.05));
+  box-shadow: 0 8px 24px rgba(255, 92, 0, 0.2);
+}
+
+.iconWrapper.magenta {
+  background: linear-gradient(135deg, rgba(250, 62, 255, 0.2), rgba(250, 62, 255, 0.05));
+  box-shadow: 0 8px 24px rgba(250, 62, 255, 0.2);
+}
+
+.icon {
+  display: block;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-white);
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(249, 249, 249, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .features {
+    padding: 4rem 1.5rem;
+  }
+
+  .grid {
+    gap: 2rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

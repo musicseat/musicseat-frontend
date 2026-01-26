@@ -1,0 +1,150 @@
+.footer {
+  background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--color-dark-purple) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem 2rem;
+}
+
+/* CTA Section */
+.cta {
+  text-align: center;
+  padding: 4rem 0;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.ctaTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  color: var(--color-white);
+}
+
+.gradient {
+  background: linear-gradient(135deg, var(--color-lime), var(--color-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-orange), var(--color-magenta));
+  color: var(--color-white);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(255, 92, 0, 0.3);
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 36px rgba(255, 92, 0, 0.5);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(249, 249, 249, 0.2), 
+    transparent
+  );
+  margin: 3rem 0;
+}
+
+/* Footer Info */
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.logoSection {
+  opacity: 0.7;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+}
+
+.links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.links a {
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.links a:hover {
+  opacity: 1;
+  color: var(--color-cyan);
+  transform: translateY(-2px);
+}
+
+.copyright {
+  color: rgba(249, 249, 249, 0.6);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .cta {
+    padding: 2rem 0;
+  }
+
+  .ctaTitle {
+    margin-bottom: 1.5rem;
+  }
+
+  .ctaButton {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+
+  .links {
+    gap: 1.5rem;
+  }
+
+  .links a {
+    font-size: 0.875rem;
+  }
+
+  .copyright {
+    font-size: 0.75rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
