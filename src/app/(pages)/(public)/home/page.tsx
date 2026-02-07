@@ -1,14 +1,12 @@
 "use client";
 
-import { ArrowRight, Mic, Music, Users } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import Link from "next/link";
+import { ArrowRight, Mic, Music, Users } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
-import bg from '@/../public/images/palco.png';
-
-
+import bg from "@/../public/images/palco.png";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -128,17 +126,17 @@ export default function Home() {
   return (
     <div className="h-full relative overflow-hidden">
       {/* background */}
-      <Image 
+      <Image
         src={bg}
         alt="Background"
+        loading="eager"
         fill
         className="object-cover -z-20  scale-110 "
       />
-      
-      {/* <div className="absolute inset-0 -z-10 backdrop-blur-sm bg-black/30" /> */}
-      
-      <div className="absolute inset-0 -z-10 bg-linear-to-br from-purple-900/15 via-black/20 to-blue-900/15 backdrop-blur-xs" />
 
+      {/* <div className="absolute inset-0 -z-10 backdrop-blur-sm bg-black/30" /> */}
+
+      <div className="absolute inset-0 -z-10 bg-linear-to-br from-purple-900/15 via-black/20 to-blue-900/15 backdrop-blur-xs" />
 
       <div className="flex flex-col items-center justify-between p-6 pb-8 h-full">
         {/* Skip button */}
@@ -159,17 +157,15 @@ export default function Home() {
               ref={cardRef}
               // className="rounded-4xl p-8 md:p-12 text-center shadow-strong h-125 md:h-137.5 flex flex-col justify-center backdrop-blur-md bg-neutral-600/10 border border-white/10"
 
-
               // className="bg-gradient-to-br from-[#021e4c]/95 via-neutral-800/90 to-[#021e4c]/95 shadow-[#00fff1]/20 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md border border-[#00fff1]/30 h-125 md:h-137.5 flex flex-col justify-center"  primeira versão
 
               // className="bg-gradient-to-br from-[#30002a]/45 to-[#30002a]/15 [#fa3eff]/95 via-neutral-800/35 border-[#fa3eff]/25 rounded-4xl p-8 md:p-12 text-center shadow-2xl shadow- backdrop-blur-sm border h-125 md:h-137.5 flex flex-col justify-center" // segunda versão
               className={`bg-linear-to-br from-background-orange/95 to-background-orange/95 via-neutral-800/90 shadow-primary-orange/20 border border-primary-orange/30 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md h-125 md:h-137.5 flex flex-col justify-center relative`}
-              
-              //  ${currentSlide === 0 ? 'bg-amber-50' : 'bg-amber-400'}
-                
-              // }  
-            >
 
+              //  ${currentSlide === 0 ? 'bg-amber-50' : 'bg-amber-400'}
+
+              // }
+            >
               {/* Icon */}
               <div className="flex justify-center mb-6">
                 <div
@@ -260,4 +256,3 @@ export default function Home() {
     </div>
   );
 }
-

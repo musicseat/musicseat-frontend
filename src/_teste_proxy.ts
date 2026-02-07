@@ -1,18 +1,16 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server"
 
 const publicRoutes = [
-  {path: '/login', whenAuthenticated: 'redirect'},
-  {path: '/register', whenAuthenticated: 'redirect'},
-  {path: '/', whenAuthenticated: 'redirect'},
-  {path: '/pricing', whenAuthenticated: 'next'},
+  { path: '/login', whenAuthenticated: 'redirect' },
+  { path: '/register', whenAuthenticated: 'redirect' },
 ] as const
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED = '/login'
 
-export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname 
+export function proxy(request: NextRequest) {
+  const path = request.nextUrl.pathname
   const publicRoute = publicRoutes.find(route => route.path === path)
-  const isAuthenticated = request.cookies.get('sessionCookie') !== undefined 
+  const isAuthenticated = request.cookies.get('sessionCookie') !== undefined
 
   if (!isAuthenticated && publicRoute) {
     return NextResponse.next()
@@ -45,14 +43,15 @@ export function middleware(request: NextRequest) {
 }
 
 export const config: MiddlewareConfig = {
-  matcher:  [
+  matcher: [
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     * - mockServiceWorker.js (MSW service worker)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|mockServiceWorker.js).*)',
   ],
 }

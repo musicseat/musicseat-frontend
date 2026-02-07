@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 // import { DM_Sans, DM_Mono } from "next/font/google";
+import { MSWProvider } from "@/providers/MSWProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,8 +26,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" >
       <body className="antialiased h-dvh">
-        {children}
+        <MSWProvider>
+          {children}
+        </MSWProvider>
       </body>
     </html>
   );
 }
+

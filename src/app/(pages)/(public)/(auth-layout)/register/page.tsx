@@ -1,45 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeft, Calendar } from "lucide-react";
+import brazil from "@/../public/images/brazil-flag-icon.svg";
+import { Calendar, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = () => {
-    console.log("Cadastro:", { name, email, birthDate, phone });
+    console.log("Cadastro:", { name, email, birthDate, phone, password });
   };
 
   return (
-    <div className="min-h-dvh flex flex-col p-6">
-      {/* Header */}
-      <div className="flex items-center justify-center relative mb-8 mt-4">
-        <Link href="/login" className="absolute left-0">
-          <ArrowLeft className="w-6 h-6 text-neutral-50" />
-        </Link>
-        <h2 className="text-lg font-semibold text-neutral-50">MusicSeat</h2>
+    <>
+      {/* Title */}
+      <div className="relative flex justify-center items-center mb-12">
+        <h1 className="text-4xl font-semibold text-neutral-50">Cadastro</h1>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 flex flex-col max-w-md w-full mx-auto">
-        {/* Title */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-50 text-center">
-            Criar Usuário
-          </h1>
-        </div>
-
-        {/* Form */}
+      <div className="px-4">
         <form className="space-y-4 flex-1">
-          {/* Name Input */}
           <div>
             <input
               type="text"
-              placeholder="Nome"
+              placeholder="Nome Completo"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="input"
@@ -55,6 +47,50 @@ export default function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               className="input"
             />
+          </div>
+
+          {/* Password Input */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input pr-12"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-300 transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+
+          {/* Confirm Password Input */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirme sua Senha"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="input pr-12"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-300 transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
           </div>
 
           {/* Birth Date Input */}
@@ -74,8 +110,10 @@ export default function RegisterPage() {
           {/* Phone Input */}
           <div className="flex gap-2">
             <div className="flex items-center gap-2 px-3 py-3 bg-neutral-700 border border-neutral-500 rounded-xl min-w-fit">
-              <span className="text-xl">🇧🇷</span>
-              <span className="text-neutral-700 font-medium">+55</span>
+              <span className="text-xl ">
+                <Image src={brazil} alt="Brazil Flag" width={24} height={24} />
+              </span>
+              <span className="text-neutral-500 font-medium">+55</span>
             </div>
             <input
               type="tel"
@@ -91,18 +129,28 @@ export default function RegisterPage() {
         <div className="flex gap-3 mt-8 mb-4">
           <Link
             href="/login"
-            className="flex-1 text-neutral-50 font-medium text-lg py-4 rounded-full  active:scale-[0.98] transition-all text-center"
+            className="w-full bg-neutral-700 text-neutral-50 font-medium text-base py-3 rounded-full hover:bg-neutral-600 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
           >
             Voltar
           </Link>
           <button
             onClick={handleSubmit}
-            className="flex-1 bg-black text-white font-medium text-lg py-4 rounded-full hover:opacity-90 active:scale-[0.98] transition-all shadow-medium"
+            className="w-full bg-black text-neutral-50 font-medium text-base py-3 rounded-full hover:bg-neutral-600 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
           >
             Próximo
           </button>
         </div>
       </div>
-    </div>
+
+      <p className="text-neutral-50">
+        Já tem uma conta?{" "}
+        <Link
+          href="/login"
+          className="hover:text-neutral-300 hover:underline underline-offset-2"
+        >
+          Faça login
+        </Link>
+      </p>
+    </>
   );
 }
