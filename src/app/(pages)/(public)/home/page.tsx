@@ -160,10 +160,10 @@ export default function Home() {
               // className="bg-gradient-to-br from-[#021e4c]/95 via-neutral-800/90 to-[#021e4c]/95 shadow-[#00fff1]/20 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md border border-[#00fff1]/30 h-125 md:h-137.5 flex flex-col justify-center"  primeira versão
 
               // className="bg-gradient-to-br from-[#30002a]/45 to-[#30002a]/15 [#fa3eff]/95 via-neutral-800/35 border-[#fa3eff]/25 rounded-4xl p-8 md:p-12 text-center shadow-2xl shadow- backdrop-blur-sm border h-125 md:h-137.5 flex flex-col justify-center" // segunda versão
-              className={`bg-linear-to-br from-background-orange/95 to-background-orange/95 via-neutral-800/90 shadow-primary-orange/20 border border-primary-orange/30 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md h-125 md:h-137.5 flex flex-col justify-center relative`}
+              className={`bg-gradient-to-br from-background-orange/95 to-background-orange/95 via-neutral-800/90 shadow-primary-orange/20 border border-primary-orange/30 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md h-125 md:h-137.5 flex flex-col justify-center relative`}
 
               //  ${currentSlide === 0 ? 'bg-amber-50' : 'bg-amber-400'}
-
+              
               // }
             >
               {/* Icon */}
