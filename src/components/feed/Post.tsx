@@ -22,17 +22,26 @@ export function Post({ post, onUpdate }: PostProps) {
   const [commentText, setCommentText] = useState('');
   const [showComments, setShowComments] = useState(false);
 
-  const handleLike = async () => {
+  async function handleLike() {
+    const previousIsLiked = isLiked;
+    const previousLikes = likes;
+
+    // Optimistic UI update
+    setIsLiked(!previousIsLiked);
+    setLikes(prev => previousIsLiked ? prev - 1 : prev + 1);
+
     try {
       const response = await api.likePost(post.id);
       setLikes(response.likes);
-      setIsLiked(true);
     } catch (error) {
-      console.error('Failed to like post:', error);
+      // Revert if API fails
+      setIsLiked(previousIsLiked);
+      setLikes(previousLikes);
+      console.error('Failed to toggle like:', error);
     }
   };
 
-  const handleComment = async () => {
+  async function handleComment() {
     if (!commentText.trim()) return;
     
     try {
@@ -45,7 +54,7 @@ export function Post({ post, onUpdate }: PostProps) {
     }
   };
 
-  const handleShare = async () => {
+  async function handleShare() {
     try {
       const response = await api.sharePost(post.id);
       setShares(response.shares);
@@ -54,7 +63,7 @@ export function Post({ post, onUpdate }: PostProps) {
     }
   };
 
-  const formatDate = (dateString: string) => {
+  function formatDate(dateString: string) {
     const date = new Date(dateString);
     const now = new Date();
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
@@ -62,7 +71,7 @@ export function Post({ post, onUpdate }: PostProps) {
     if (diffInHours < 1) return 'Just now';
     if (diffInHours < 24) return `${diffInHours}h ago`;
     return `${Math.floor(diffInHours / 24)}d ago`;
-  };
+  }
 
   return (
     <article className="card">
@@ -70,10 +79,10 @@ export function Post({ post, onUpdate }: PostProps) {
       <div className="flex items-start gap-3 mb-4">
         <Avatar src={post.author.avatar} alt={post.author.name} size="md" />
         <div className="flex-1">
-          <h3 className="font-semibold text-[var(--color-neutral-50)]">
+          <h3 className="font-semibold text-neutral-50">
             {post.author.name}
           </h3>
-          <p className="text-caption text-[var(--color-neutral-400)]">
+          <p className="text-caption text-neutral-400">
             {post.author.username} · {formatDate(post.createdAt)}
           </p>
         </div>
@@ -81,43 +90,45 @@ export function Post({ post, onUpdate }: PostProps) {
 
       {/* Post Content */}
       <div className="mb-4">
-        <p className="text-body text-[var(--color-neutral-100)] mb-3">
+        <p className="text-body text-neutral-100 mb-3">
           {post.content}
         </p>
         {post.image && (
           <img
             src={post.image}
             alt="Post content"
-            className="w-full rounded-[var(--radius-card)] object-cover max-h-[500px]"
+            className="w-full rounded-card object-cover max-h-[500px]"
           />
         )}
       </div>
 
       {/* Interaction Stats */}
-      <div className="flex items-center gap-4 mb-3 text-body-sm text-[var(--color-neutral-400)]">
+      <div className="flex items-center gap-4 mb-3 text-body-sm text-neutral-400">
         <span>{likes.toLocaleString()} likes</span>
         <span>{comments.length} comments</span>
         <span>{shares} shares</span>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center gap-2 pb-3 border-b border-[var(--color-neutral-600)]">
+      <div className="flex items-center gap-2 pb-3 border-b border-neutral-600">
         <button
           onClick={handleLike}
           className={cn(
-            'flex items-center gap-2 px-4 py-2 rounded-[var(--radius-button)] transition-colors',
+            'flex items-center gap-2 px-4 py-2 rounded-button transition-all duration-200',
             isLiked
-              ? 'text-[var(--color-primary-pink)] bg-[var(--color-background-pink)]'
-              : 'text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-600)]'
+              ? 'text-primary-pink bg-background-pink scale-105 animate-heart-pop'
+              : 'text-neutral-300 hover:bg-neutral-600'
           )}
         >
-          <Heart className={cn('w-5 h-5', isLiked && 'fill-current')} />
-          <span className="text-body-sm font-medium">Like</span>
+          <Heart className={cn('w-5 h-5 transition-transform', isLiked && 'fill-current')} />
+          <span className="text-body-sm font-medium">
+            {isLiked ? 'Liked' : 'Like'}
+          </span>
         </button>
         
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-button)] text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-600)] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-button text-neutral-300 hover:bg-neutral-600 transition-colors"
         >
           <MessageCircle className="w-5 h-5" />
           <span className="text-body-sm font-medium">Comment</span>
@@ -125,7 +136,7 @@ export function Post({ post, onUpdate }: PostProps) {
         
         <button
           onClick={handleShare}
-          className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-button)] text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-600)] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-button text-neutral-300 hover:bg-neutral-600 transition-colors"
         >
           <Share2 className="w-5 h-5" />
           <span className="text-body-sm font-medium">Share</span>
@@ -154,11 +165,11 @@ export function Post({ post, onUpdate }: PostProps) {
           {comments.map((comment) => (
             <div key={comment.id} className="flex gap-3">
               <Avatar src={comment.author.avatar} alt={comment.author.name} size="sm" />
-              <div className="flex-1 bg-[var(--color-neutral-600)] rounded-[var(--radius-input)] p-3">
-                <p className="font-semibold text-body-sm text-[var(--color-neutral-50)]">
+              <div className="flex-1 bg-neutral-600 rounded-input p-3">
+                <p className="font-semibold text-body-sm text-neutral-50">
                   {comment.author.name}
                 </p>
-                <p className="text-body-sm text-[var(--color-neutral-200)]">
+                <p className="text-body-sm text-neutral-200">
                   {comment.content}
                 </p>
               </div>

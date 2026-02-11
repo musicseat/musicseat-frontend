@@ -9,12 +9,12 @@ import { useState } from 'react';
 export function PostCreator() {
   const [content, setContent] = useState('');
 
-  const handlePost = () => {
+  function handlePost() {
     if (!content.trim()) return;
     // In a real app, this would call the API
     console.log('Creating post:', content);
     setContent('');
-  };
+  }
 
   return (
     <div className="card mb-6">
@@ -35,10 +35,10 @@ export function PostCreator() {
           
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
-              <button className="p-2 rounded-full hover:bg-[var(--color-neutral-600)] text-[var(--color-neutral-300)] transition-colors">
+              <button className="p-2 rounded-full hover:bg-neutral-600 text-neutral-300 transition-colors">
                 <Image className="w-5 h-5" />
               </button>
-              <button className="p-2 rounded-full hover:bg-[var(--color-neutral-600)] text-[var(--color-neutral-300)] transition-colors">
+              <button className="p-2 rounded-full hover:bg-neutral-600 text-neutral-300 transition-colors">
                 <Smile className="w-5 h-5" />
               </button>
             </div>
