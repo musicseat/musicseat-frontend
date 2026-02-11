@@ -20,7 +20,7 @@ export function Avatar({ src, alt, size = 'md', className }: AvatarProps) {
       src={src}
       alt={alt}
       className={cn(
-        'rounded-full object-cover',
+        'rounded-full object-cover ring-2 ring-white/5 border border-white/5',
         sizeClasses[size],
         className
       )}

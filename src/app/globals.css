@@ -360,6 +360,40 @@
     display: none;
   }
 
+  /* Glassmorphism */
+  .glass {
+    background: rgba(42, 42, 42, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-cyan {
+    background: rgba(2, 30, 76, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 241, 0.1);
+  }
+
+  /* Premium Hover Effects */
+  .hover-lift {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+
+  .card-hover:hover {
+    background-color: var(--color-neutral-600);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
   @keyframes heart-pop {
     0% { transform: scale(1); }
     50% { transform: scale(1.3); }

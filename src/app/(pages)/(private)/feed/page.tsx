@@ -32,6 +32,10 @@ export default function Feed() {
     setPosts(posts.map(p => p.id === updatedPost.id ? updatedPost : p));
   };
 
+  const handleNewPost = (newPost: PostType) => {
+    setPosts([newPost, ...posts]);
+  };
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] pb-[60px] md:pb-0">
       {/* Left Sidebar - Fixed on desktop */}
@@ -42,7 +46,7 @@ export default function Feed() {
         <div className="max-w-[1200px] mx-auto px-4 md:px-6 grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-8">
           {/* Main Feed */}
           <main className="py-6 min-h-screen w-full max-w-[680px] mx-auto xl:mx-0">
-            <PostCreator />
+            <PostCreator onPostCreated={handleNewPost} />
             
             {loading ? (
               <div className="card text-center py-12">

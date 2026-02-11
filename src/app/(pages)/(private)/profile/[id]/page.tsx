@@ -5,6 +5,7 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { LeftSidebar } from '@/components/layout/LeftSidebar';
 import { RightSidebar } from '@/components/layout/RightSidebar';
 import { Avatar } from '@/components/ui/Avatar';
+import { cn } from '@/lib/utils';
 import { api } from '@/services/api';
 import type { Post as PostType, User } from '@/types';
 import { useParams } from 'next/navigation';
@@ -55,7 +56,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] pb-[60px] md:pb-0">
+    <div className="min-h-screen bg-neutral-800 pb-[60px] md:pb-0">
       {/* Left Sidebar - Fixed on desktop */}
       <LeftSidebar />
 
@@ -65,63 +66,67 @@ export default function Profile() {
           {/* Main Profile Content */}
           <main className="py-6 min-h-screen w-full max-w-[680px] mx-auto xl:mx-0">
             {/* Profile Header */}
-            <div className="card mb-6">
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6 text-center sm:text-left">
-                <Avatar src={user.avatar} alt={user.name} size="xl" />
+            <div className="glass rounded-card p-8 mb-6 border border-white/5 shadow-strong relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary-pink/5 rounded-full blur-3xl -mr-32 -mt-32" />
+              
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 mb-8 text-center sm:text-left relative z-10">
+                <Avatar src={user.avatar} alt={user.name} size="xl" className="ring-4 ring-primary-cyan/20 h-24 w-24" />
                 <div className="flex-1">
-                  <h1 className="text-h1 text-[var(--color-neutral-50)] mb-1">
+                  <h1 className="text-h1 text-neutral-50 mb-1 font-bold">
                     {user.name}
                   </h1>
-                  <p className="text-body text-[var(--color-neutral-400)] mb-4">
+                  <p className="text-body text-neutral-400 mb-4 font-medium tracking-wide">
                     {user.username}
                   </p>
-                  <p className="text-body text-[var(--color-neutral-200)] mb-4">
+                  <p className="text-body text-neutral-200 mb-6 max-w-lg leading-relaxed">
                     {user.bio}
                   </p>
                   
                   {/* Stats */}
-                  <div className="flex justify-center sm:justify-start gap-6">
-                    <div>
-                      <p className="text-h3 text-[var(--color-neutral-50)]">
+                  <div className="flex justify-center sm:justify-start gap-8">
+                    <div className="group cursor-default">
+                      <p className="text-h3 text-neutral-50 group-hover:text-primary-cyan transition-colors">
                         {user.postsCount}
                       </p>
-                      <p className="text-body-sm text-[var(--color-neutral-400)]">Posts</p>
+                      <p className="text-caption text-neutral-500 uppercase tracking-widest font-bold">Posts</p>
                     </div>
-                    <div>
-                      <p className="text-h3 text-[var(--color-neutral-50)]">
+                    <div className="group cursor-default">
+                      <p className="text-h3 text-neutral-50 group-hover:text-primary-pink transition-colors">
                         {user.followers.toLocaleString()}
                       </p>
-                      <p className="text-body-sm text-[var(--color-neutral-400)]">Followers</p>
+                      <p className="text-caption text-neutral-500 uppercase tracking-widest font-bold">Followers</p>
                     </div>
-                    <div>
-                      <p className="text-h3 text-[var(--color-neutral-50)]">
+                    <div className="group cursor-default">
+                      <p className="text-h3 text-neutral-50 group-hover:text-primary-orange transition-colors">
                         {user.following.toLocaleString()}
                       </p>
-                      <p className="text-body-sm text-[var(--color-neutral-400)]">Following</p>
+                      <p className="text-caption text-neutral-500 uppercase tracking-widest font-bold">Following</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Tabs */}
-              <div className="flex gap-4 border-t border-[var(--color-neutral-600)] pt-4 overflow-x-auto no-scrollbar">
+              <div className="flex gap-2 border-t border-white/5 pt-6 overflow-x-auto scrollbar-hide">
                 <button
                   onClick={() => setActiveTab('posts')}
-                  className={`px-4 py-2 rounded-[var(--radius-button)] transition-colors whitespace-nowrap ${
+                  className={cn(
+                    'px-6 py-2.5 rounded-button transition-all duration-300 font-semibold whitespace-nowrap',
                     activeTab === 'posts'
-                      ? 'bg-[var(--color-primary-cyan)] text-[var(--color-neutral-800)] font-semibold'
-                      : 'text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-600)]'
-                  }`}
+                      ? 'bg-primary-cyan text-neutral-800 shadow-[0_0_15px_rgba(0,255,241,0.2)]'
+                      : 'text-neutral-400 hover:bg-white/5 hover:text-neutral-100'
+                  )}
                 >
                   Posts
                 </button>
                 <button
                   onClick={() => setActiveTab('shared')}
-                  className={`px-4 py-2 rounded-[var(--radius-button)] transition-colors whitespace-nowrap ${
+                  className={cn(
+                    'px-6 py-2.5 rounded-button transition-all duration-300 font-semibold whitespace-nowrap',
                     activeTab === 'shared'
-                      ? 'bg-[var(--color-primary-cyan)] text-[var(--color-neutral-800)] font-semibold'
-                      : 'text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-600)]'
-                  }`}
+                      ? 'bg-primary-cyan text-neutral-800 shadow-[0_0_15px_rgba(0,255,241,0.2)]'
+                      : 'text-neutral-400 hover:bg-white/5 hover:text-neutral-100'
+                  )}
                 >
                   Shared
                 </button>
@@ -129,18 +134,18 @@ export default function Profile() {
             </div>
 
             {/* Posts */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               {activeTab === 'posts' && posts.length > 0 ? (
                 posts.map((post) => <Post key={post.id} post={post} />)
               ) : activeTab === 'shared' ? (
-                <div className="card text-center py-12">
-                  <p className="text-body text-[var(--color-neutral-400)]">
+                <div className="glass rounded-card text-center py-16 border border-white/5">
+                  <p className="text-body text-neutral-400">
                     No shared posts yet
                   </p>
                 </div>
               ) : (
-                <div className="card text-center py-12">
-                  <p className="text-body text-[var(--color-neutral-400)]">
+                <div className="glass rounded-card text-center py-16 border border-white/5">
+                  <p className="text-body text-neutral-400">
                     No posts yet
                   </p>
                 </div>

@@ -1,5 +1,5 @@
-import type { Post, User } from '@/types';
 import axiosInstance from '@/lib/axios';
+import type { Post, User } from '@/types';
 
 export const api = {
   // Feed endpoints
@@ -16,6 +16,11 @@ export const api = {
 
   getUserPosts: async (userId: string): Promise<Post[]> => {
     const response = await axiosInstance.get<Post[]>(`/users/${userId}/posts`);
+    return response.data;
+  },
+
+  createPost: async (content: string): Promise<Post> => {
+    const response = await axiosInstance.post<Post>('/posts', { content });
     return response.data;
   },
 

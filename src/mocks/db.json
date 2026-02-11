@@ -1,0 +1,152 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Luna Vox",
+      "username": "@lunavox_official",
+      "avatar": "https://i.pravatar.cc/150?img=5",
+      "bio": "Singer-songwriter | New album \"Starlight\" out now! 🎵✨",
+      "followers": 1250400,
+      "following": 150,
+      "postsCount": 1240
+    },
+    {
+      "id": "2",
+      "name": "Marcus Bass",
+      "username": "@marcus_groove",
+      "avatar": "https://i.pravatar.cc/150?img=11",
+      "bio": "Jazz Bassist | Composer | Session Musician 🎸 Find me on tour.",
+      "followers": 45200,
+      "following": 890,
+      "postsCount": 542
+    },
+    {
+      "id": "3",
+      "name": "DJ Echo",
+      "username": "@dj_echo_beats",
+      "avatar": "https://i.pravatar.cc/150?img=3",
+      "bio": "Electronic Music Producer 🎧 | Bringing the underground to your ears.",
+      "followers": 89300,
+      "following": 1200,
+      "postsCount": 368
+    },
+    {
+      "id": "4",
+      "name": "Elena Strings",
+      "username": "@elenastrings",
+      "avatar": "https://i.pravatar.cc/150?img=47",
+      "bio": "Classical Violinist | Teaching & Performing 🎻 | Passion for Bach.",
+      "followers": 128900,
+      "following": 320,
+      "postsCount": 189
+    }
+  ],
+  "posts": [
+    {
+      "id": "p1770776162977",
+      "authorId": "1",
+      "content": "post one",
+      "likes": 0,
+      "shares": 0,
+      "createdAt": "2026-02-11T02:16:02.977Z",
+      "isLiked": false,
+      "comments": []
+    },
+    {
+      "id": "p1",
+      "authorId": "2",
+      "content": "O ensaio de hoje rendeu! Testando novos pedais para a turnê de inverno. O som do baixo está ganhando uma textura incrível... ler mais",
+      "image": "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=800&h=600&fit=crop",
+      "likes": 3200,
+      "shares": 120,
+      "createdAt": "2026-02-06T09:21:00Z",
+      "isLiked": false,
+      "comments": [
+        {
+          "id": "c1",
+          "authorId": "3",
+          "content": "Essa produção está absurda! Que timbragem é essa? 🔥",
+          "createdAt": "2026-02-06T12:30:00Z"
+        },
+        {
+          "id": "c2",
+          "authorId": "4",
+          "content": "A harmonia dessa composição ficou impecável. Parabéns! 🎻✨",
+          "createdAt": "2026-02-06T13:15:00Z"
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "authorId": "3",
+      "content": "Setlist pronto para o festival deste final de semana! Preparem os ouvidos para muito grave e sintetizadores modulares. 🎧🔥",
+      "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&h=600&fit=crop",
+      "likes": 4499,
+      "shares": 890,
+      "createdAt": "2026-02-06T11:45:00Z",
+      "isLiked": false,
+      "comments": [
+        {
+          "id": "c1",
+          "authorId": "3",
+          "content": "Essa produção está absurda! Que timbragem é essa? 🔥",
+          "createdAt": "2026-02-06T12:30:00Z"
+        },
+        {
+          "id": "c5",
+          "authorId": "3",
+          "content": "Aumenta o volume que lá vem pedrada! 🔊🙌",
+          "createdAt": "2026-02-06T16:05:00Z"
+        },
+        {
+          "id": "c1770780079581",
+          "authorId": "1",
+          "content": "wow",
+          "createdAt": "2026-02-11T03:21:19.581Z"
+        },
+        {
+          "id": "c1770780086072",
+          "authorId": "1",
+          "content": "muito bom",
+          "createdAt": "2026-02-11T03:21:26.072Z"
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "authorId": "4",
+      "content": "A acústica deste teatro é simplesmente divina. Praticando os últimos movimentos do concerto de amanhã. 🎻🏛️",
+      "image": "https://images.unsplash.com/photo-1624367171718-14026220ee35?q=80&w=687&auto=format&fit=crop",
+      "likes": 1234,
+      "shares": 156,
+      "createdAt": "2026-02-06T08:30:00Z",
+      "isLiked": true,
+      "comments": [
+        {
+          "id": "c2",
+          "authorId": "4",
+          "content": "A harmonia dessa composição ficou impecável. Parabéns! 🎻✨",
+          "createdAt": "2026-02-06T13:15:00Z"
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "authorId": "1",
+      "content": "Escrever música é transformar silêncio em sentimento. Grata por cada um de vocês que ouviu meu novo single hoje! 🎤✨",
+      "image": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800&h=600&fit=crop",
+      "likes": 15400,
+      "shares": 2300,
+      "createdAt": "2026-02-05T16:20:00Z",
+      "isLiked": false,
+      "comments": [
+        {
+          "id": "c3",
+          "authorId": "1",
+          "content": "Já quero fazer um feat! Me manda essa demo por DM? 🎤🎶",
+          "createdAt": "2026-02-06T14:45:00Z"
+        }
+      ]
+    }
+  ]
+}
