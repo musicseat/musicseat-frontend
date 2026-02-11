@@ -16,28 +16,32 @@ export function LeftSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 h-screen p-6">
-      <nav className="space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-          
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-4 px-4 py-3 rounded-[var(--radius-button)] transition-colors',
-                isActive
-                  ? 'bg-[var(--color-primary-cyan)] text-[var(--color-neutral-800)] font-semibold'
-                  : 'text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-700)]'
-              )}
-            >
-              <Icon className="w-6 h-6" />
-              <span className="text-body-lg">{item.label}</span>
-            </Link>
-          );
-        })}
+    <aside className="hidden md:flex fixed left-0 top-0 h-screen z-20">
+      <nav className="h-full bg-[var(--color-background)] flex flex-col items-center py-6 transition-all duration-300 ease-in-out w-[80px] hover:w-[240px] group overflow-hidden">
+        <div className="space-y-4 w-full px-3">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-4 px-4 py-3 rounded-[var(--radius-button)] transition-colors whitespace-nowrap',
+                  isActive
+                    ? 'bg-[var(--color-primary-cyan)] text-[var(--color-neutral-800)] font-semibold'
+                    : 'text-[var(--color-neutral-300)] hover:bg-[var(--color-neutral-700)]'
+                )}
+              >
+                <Icon className="w-6 h-6 min-w-6" />
+                <span className="text-body-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
     </aside>
   );
