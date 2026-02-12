@@ -4,21 +4,66 @@ import brazil from "@/../public/images/brazil-flag-icon.svg";
 import { Calendar, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import { signIn } from "next-auth/react";
 
 import logo from "@/../public/images/musicset-icon-white.svg";
 
-export default function RegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
+import { registerUser } from "@/actions/auth";
+import { RegisterData, registerSchema } from "@/lib/validations/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-  const handleSubmit = () => {
-    console.log("Cadastro:", { name, email, birthDate, phone, password });
+export default function RegisterPage() {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<RegisterData>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const onSubmit = async (data: RegisterData) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Mocking the FormData expected by the action for compatibility
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => formData.append(key, value as string));
+
+      const result = await registerUser(null, formData);
+
+      if (result.error) {
+        setError(result.error);
+      } else {
+        // Log in automatically after registration
+        const loginResult = await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+
+        if (loginResult?.error) {
+          setError("Conta criada, mas erro ao fazer login automático. Tente entrar manualmente.");
+        } else {
+          router.push("/feed");
+          router.refresh();
+        }
+      }
+    } catch (err) {
+      setError("Ocorreu um erro ao criar sua conta. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -33,28 +78,32 @@ export default function RegisterPage() {
       </div>
 
       <div className="px-2">
-        <form className="space-y-3 flex-1">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 flex-1">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Nome Completo</label>
             <input
+              {...register("name")}
               type="text"
               placeholder="Como devemos te chamar?"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300"
+              className={`w-full px-5 py-3.5 bg-white/5 border ${errors.name ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300`}
             />
+            {errors.name && (
+                <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.name.message}</span>
+            )}
           </div>
 
           {/* Email Input */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Email</label>
             <input
+              {...register("email")}
               type="email"
               placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300"
+              className={`w-full px-5 py-3.5 bg-white/5 border ${errors.email ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300`}
             />
+            {errors.email && (
+                <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.email.message}</span>
+            )}
           </div>
 
           {/* Password Input */}
@@ -62,11 +111,10 @@ export default function RegisterPage() {
             <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Senha</label>
             <div className="relative">
               <input
+                {...register("password")}
                 type={showPassword ? "text" : "password"}
                 placeholder="Crie sua chave de acesso..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-pink/50 focus:ring-4 focus:ring-primary-pink/5 transition-all duration-300 pr-12"
+                className={`w-full px-5 py-3.5 bg-white/5 border ${errors.password ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-pink/50 focus:ring-4 focus:ring-primary-pink/5 transition-all duration-300 pr-12`}
               />
               <button
                 type="button"
@@ -80,6 +128,9 @@ export default function RegisterPage() {
                 )}
               </button>
             </div>
+            {errors.password && (
+                <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.password.message}</span>
+            )}
           </div>
 
           {/* Birth Date Input */}
@@ -87,16 +138,18 @@ export default function RegisterPage() {
             <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Data de Nascimento</label>
             <div className="relative">
               <input
+                {...register("birthDate")}
                 type="text"
                 placeholder="DD/MM/AAAA"
-                value={birthDate}
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => !e.target.value && (e.target.type = "text")}
-                onChange={(e) => setBirthDate(e.target.value)}
-                className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300"
+                className={`w-full px-5 py-3.5 bg-white/5 border ${errors.birthDate ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300`}
               />
               <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500 pointer-events-none" />
             </div>
+            {errors.birthDate && (
+                <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.birthDate.message}</span>
+            )}
           </div>
 
           {/* Phone Input */}
@@ -110,32 +163,41 @@ export default function RegisterPage() {
                 <span className="text-neutral-400 font-bold text-sm">+55</span>
               </div>
               <input
+                {...register("phone")}
                 type="tel"
                 placeholder="(00) 00000-0000"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="flex-1 px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300"
+                className={`flex-1 px-5 py-3.5 bg-white/5 border ${errors.phone ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300`}
               />
             </div>
+            {errors.phone && (
+                <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.phone.message}</span>
+            )}
+          </div>
+
+          {/* Global Error Message */}
+          {error && (
+            <div className="bg-primary-pink/10 border border-primary-pink/20 rounded-xl p-3 text-primary-pink text-[10px] font-bold text-center animate-pulse uppercase tracking-wider">
+              {error}
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div className="flex flex-col gap-3 mt-6 mb-4">
+            <button
+              disabled={isLoading}
+              className="w-full bg-brand-gradient text-white font-black text-lg py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg glow-cyan cursor-pointer uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Criando conta..." : "Cadastrar no MusicSet"}
+            </button>
+            
+            <Link
+              href="/login"
+              className="w-full bg-white/5 border border-white/10 text-neutral-400 font-bold text-xs py-3 rounded-full hover:bg-white/10 hover:text-white transition-all text-center uppercase tracking-widest"
+            >
+              Já tenho conta. Fazer Login
+            </Link>
           </div>
         </form>
-
-        {/* Buttons */}
-        <div className="flex flex-col gap-3 mt-6 mb-4">
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-brand-gradient text-white font-black text-lg py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg glow-cyan cursor-pointer uppercase tracking-widest"
-          >
-            Cadastrar no MusicSet
-          </button>
-          
-          <Link
-            href="/login"
-            className="w-full bg-white/5 border border-white/10 text-neutral-400 font-bold text-xs py-3 rounded-full hover:bg-white/10 hover:text-white transition-all text-center uppercase tracking-widest"
-          >
-            Já tenho conta. Fazer Login
-          </Link>
-        </div>
       </div>
     </>
   );

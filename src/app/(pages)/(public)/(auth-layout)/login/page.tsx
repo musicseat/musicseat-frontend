@@ -9,13 +9,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
+import { LoginData, loginSchema } from "@/lib/validations/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+
 export default function LoginPage() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginData>({
+    resolver: zodResolver(loginSchema),
+  });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const themeButtonRef = useRef(null);
@@ -39,16 +51,28 @@ export default function LoginPage() {
     setIsDarkMode(!isDarkMode);
   };
 
-  async function handleSubmit(e: React.MouseEvent) {
-    e.preventDefault();
+  const onSubmit = async (data: LoginData) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
 
-    console.log("Login:", { email, password, rememberMe });
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log("Login bem-sucedido!");      
-
-    router.push("/feed");
-  }
+      if (result?.error) {
+        setError("Email ou senha inválidos. Tenta de novo?");
+      } else {
+        router.push("/feed");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("Ocorreu um erro inesperado. Tenta daqui a pouco?");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -61,17 +85,19 @@ export default function LoginPage() {
       </div>
 
       {/* Form */}
-      <form className="space-y-3.5 px-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 px-2">
         {/* Email Input */}
         <div className="space-y-1.5">
           <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Email ou Usuário</label>
           <input
+            {...register("email")}
             type="email"
             placeholder="Digite seu acesso..."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300"
+            className={`w-full px-5 py-3.5 bg-white/5 border ${errors.email ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-cyan/50 focus:ring-4 focus:ring-primary-cyan/5 transition-all duration-300`}
           />
+          {errors.email && (
+            <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.email.message}</span>
+          )}
         </div>
 
         {/* Password Input */}
@@ -79,11 +105,10 @@ export default function LoginPage() {
           <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Senha</label>
           <div className="relative">
             <input
+              {...register("password")}
               type={showPassword ? "text" : "password"}
               placeholder="Sua chave musical..."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-5 py-3.5 bg-white/5 border border-white/5 rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-pink/50 focus:ring-4 focus:ring-primary-pink/5 transition-all duration-300 pr-12"
+              className={`w-full px-5 py-3.5 bg-white/5 border ${errors.password ? 'border-primary-pink/50' : 'border-white/5'} rounded-2xl text-neutral-50 placeholder:text-neutral-600 focus:outline-none focus:border-primary-pink/50 focus:ring-4 focus:ring-primary-pink/5 transition-all duration-300 pr-12`}
             />
             <button
               type="button"
@@ -97,16 +122,25 @@ export default function LoginPage() {
               )}
             </button>
           </div>
+          {errors.password && (
+            <span className="text-[10px] text-primary-pink font-bold ml-1 uppercase tracking-wider">{errors.password.message}</span>
+          )}
         </div>
+
+        {/* Global Error Message */}
+        {error && (
+          <div className="bg-primary-pink/10 border border-primary-pink/20 rounded-xl p-3 text-primary-pink text-[10px] font-bold text-center animate-pulse uppercase tracking-wider">
+            {error}
+          </div>
+        )}
 
         {/* Remember & Forgot */}
         <div className="flex items-center justify-between pb-4 pt-2">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex items-center justify-center">
               <input
+                {...register("remember")}
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
                 className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-white/10 bg-white/5 transition-all checked:bg-primary-cyan"
               />
               <span className="absolute text-neutral-900 opacity-0 peer-checked:opacity-100 transition-opacity">
@@ -127,10 +161,10 @@ export default function LoginPage() {
 
         {/* Login Button */}
         <button
-          onClick={handleSubmit}
-          className="w-full bg-brand-gradient text-white font-black text-lg py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg glow-cyan cursor-pointer uppercase tracking-widest"
+          disabled={isLoading}
+          className="w-full bg-brand-gradient text-white font-black text-lg py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg glow-cyan cursor-pointer uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Entrar no Palco
+          {isLoading ? "Acessando..." : "Entrar no Palco"}
         </button>
 
         {/* Sign Up Link */}
