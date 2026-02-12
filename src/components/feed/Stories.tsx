@@ -31,16 +31,16 @@ export function Stories() {
 
   return (
     <div className="card mb-6">
-      <h3 className="text-h3 mb-4 text-[var(--color-neutral-50)]">Stories</h3>
+      <h3 className="text-h3 mb-4 text-neutral-50">Stories</h3>
       
       <div className="relative group/container">
         {/* Left Button */}
         <button 
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[var(--color-neutral-700)]/80 p-1 rounded-full shadow-medium opacity-0 group-hover/container:opacity-100 transition-opacity hover:bg-[var(--color-neutral-600)]"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-neutral-700/80 p-1 rounded-full shadow-medium opacity-0 group-hover/container:opacity-100 transition-opacity hover:bg-neutral-600"
           aria-label="Scroll left"
         >
-          <ChevronLeft className="w-5 h-5 text-[var(--color-neutral-50)]" />
+          <ChevronLeft className="w-5 h-5 text-neutral-50" />
         </button>
         
         {/* Stories List */}
@@ -54,13 +54,13 @@ export function Stories() {
               className="flex flex-col items-center gap-2 min-w-fit group"
             >
               {/* Avatar Container with Gradient Border */}
-              <div className="p-[2px] rounded-full bg-gradient-to-br from-[var(--color-primary-pink)] via-[var(--color-primary-orange)] to-[var(--color-primary-cyan)]">
-                <div className="bg-[var(--color-neutral-700)] rounded-full p-[2px]">
-                  <Avatar src={story.avatar} alt={story.user} size="md" />
+              <div className="p-[2.5px] rounded-full bg-brand-gradient hover:scale-110 shadow-lg glow-pink transition-transform duration-300">
+                <div className="bg-neutral-800 rounded-full p-[2px]">
+                  <Avatar src={story.avatar} alt={story.user} size="md" className="ring-2 ring-black/20" />
                 </div>
               </div>
               
-              <span className="text-caption text-[var(--color-neutral-300)] group-hover:text-[var(--color-neutral-50)] transition-colors">
+              <span className="text-caption text-neutral-300 group-hover:text-neutral-50 transition-colors">
                 {story.user}
               </span>
             </button>
@@ -70,10 +70,10 @@ export function Stories() {
         {/* Right Button */}
         <button 
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[var(--color-neutral-700)]/80 p-1 rounded-full shadow-medium opacity-0 group-hover/container:opacity-100 transition-opacity hover:bg-[var(--color-neutral-600)]"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-neutral-700/80 p-1 rounded-full shadow-medium opacity-0 group-hover/container:opacity-100 transition-opacity hover:bg-neutral-600"
           aria-label="Scroll right"
         >
-          <ChevronRight className="w-5 h-5 text-[var(--color-neutral-50)]" />
+          <ChevronRight className="w-5 h-5 text-neutral-50" />
         </button>
       </div>
     </div>

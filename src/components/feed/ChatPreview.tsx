@@ -55,34 +55,34 @@ const messages: ChatMessage[] = [
 export function ChatPreview() {
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-h3 text-[var(--color-neutral-50)]">Messages</h3>
-        <button className="text-body-sm text-[var(--color-primary-cyan)] hover:underline">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-h3 text-neutral-50 font-bold">Messages</h3>
+        <button className="text-caption text-primary-cyan font-bold uppercase tracking-wider hover:underline">
           See all
         </button>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-3">
         {messages.map((msg) => (
           <button
             key={msg.id}
-            className="flex items-center gap-3 w-full p-3 rounded-[var(--radius-input)] hover:bg-[var(--color-neutral-600)] transition-colors"
+            className="flex items-center gap-4 w-full p-3 rounded-input hover:bg-white/5 transition-all duration-300 group"
           >
             <div className="relative">
-              <Avatar src={msg.user.avatar} alt={msg.user.name} size="sm" />
+              <Avatar src={msg.user.avatar} alt={msg.user.name} size="sm" className="group-hover:ring-2 ring-primary-cyan/30 transition-all" />
               {msg.unread && (
-                <span className="absolute top-0 right-0 w-2 h-2 bg-[var(--color-primary-cyan)] rounded-full" />
+                <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-primary-cyan rounded-full shadow-[0_0_8px_rgba(0,255,241,0.6)] animate-pulse" />
               )}
             </div>
             <div className="flex-1 text-left">
-              <p className="text-body-sm font-semibold text-[var(--color-neutral-50)]">
+              <p className="text-body-sm font-bold text-neutral-50 group-hover:text-primary-cyan transition-colors">
                 {msg.user.name}
               </p>
-              <p className="text-caption text-[var(--color-neutral-400)] truncate">
+              <p className="text-caption text-neutral-400 truncate font-medium">
                 {msg.message}
               </p>
             </div>
-            <span className="text-caption text-[var(--color-neutral-400)]">
+            <span className="text-[10px] text-neutral-500 font-mono">
               {msg.timestamp}
             </span>
           </button>

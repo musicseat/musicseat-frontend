@@ -101,7 +101,7 @@ export function Post({ post, onUpdate }: PostProps) {
               alt="Post content"
               className="w-full object-cover max-h-[500px] transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         )}
       </div>
@@ -179,7 +179,7 @@ export function Post({ post, onUpdate }: PostProps) {
             {comments.map((comment) => (
               <div key={comment.id} className="flex gap-3 group">
                 <Avatar src={comment.author.avatar} alt={comment.author.name} size="sm" />
-                <div className="flex-1 bg-white/5 rounded-2xl rounded-tl-none p-3 border border-white/5 group-hover:bg-white/[0.08] transition-colors">
+                <div className="flex-1 bg-white/5 rounded-2xl rounded-tl-none p-3 border border-white/5 group-hover:bg-white/8 transition-colors">
                   <div className="flex justify-between items-center mb-1">
                     <p className="font-bold text-body-sm text-neutral-100">
                       {comment.author.name}

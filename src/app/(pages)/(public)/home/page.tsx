@@ -136,7 +136,7 @@ export default function Home() {
 
       {/* <div className="absolute inset-0 -z-10 backdrop-blur-sm bg-black/30" /> */}
 
-      <div className="absolute inset-0 -z-10 bg-linear-to-br from-purple-900/15 via-black/20 to-blue-900/15 backdrop-blur-xs" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary-pink/10 via-black/40 to-primary-cyan/10 backdrop-blur-sm" />
 
       <div className="flex flex-col items-center justify-between p-6 pb-8 h-full">
         {/* Skip button */}
@@ -160,17 +160,15 @@ export default function Home() {
               // className="bg-gradient-to-br from-[#021e4c]/95 via-neutral-800/90 to-[#021e4c]/95 shadow-[#00fff1]/20 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md border border-[#00fff1]/30 h-125 md:h-137.5 flex flex-col justify-center"  primeira versão
 
               // className="bg-gradient-to-br from-[#30002a]/45 to-[#30002a]/15 [#fa3eff]/95 via-neutral-800/35 border-[#fa3eff]/25 rounded-4xl p-8 md:p-12 text-center shadow-2xl shadow- backdrop-blur-sm border h-125 md:h-137.5 flex flex-col justify-center" // segunda versão
-              className={`bg-gradient-to-br from-background-orange/95 to-background-orange/95 via-neutral-800/90 shadow-primary-orange/20 border border-primary-orange/30 rounded-4xl p-8 md:p-12 text-center shadow-2xl backdrop-blur-md h-125 md:h-137.5 flex flex-col justify-center relative`}
-
-              //  ${currentSlide === 0 ? 'bg-amber-50' : 'bg-amber-400'}
-              
-              // }
+              className={`glass rounded-[32px] p-8 md:p-12 text-center shadow-strong h-125 md:h-137.5 flex flex-col justify-center relative overflow-hidden group`}
             >
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary-pink/10 rounded-full blur-3xl group-hover:bg-primary-pink/20 transition-all duration-700" />
+              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary-cyan/10 rounded-full blur-3xl group-hover:bg-primary-cyan/20 transition-all duration-700" />
               {/* Icon */}
               <div className="flex justify-center mb-6">
                 <div
                   ref={iconRef}
-                  className="rounded-2xl p-6 md:p-8 text-neutral-50 w-32 h-32 flex items-center justify-center"
+                  className="rounded-2xl p-6 md:p-8 bg-brand-gradient text-white w-32 h-32 flex items-center justify-center shadow-lg glow-pink"
                 >
                   {slides[currentSlide].icon}
                 </div>
@@ -225,9 +223,7 @@ export default function Home() {
             {currentSlide > 0 && (
               <button
                 onClick={handleBack}
-                className="flex items-center justify-center max-w-28 bg-transparent text-neutral-50 font-semibold text-base md:text-lg py-3 md:py-4 px-6 md:px-10 rounded-full hover:bg-neutral-700 hover:border-primary-orange/60 active:scale-[0.98] transition-all bg-linear-to-br from-background-orange/95 to-background-orange/95 via-neutral-800/90 shadow-primary-orange/20 border border-primary-orange/30
-                
-                "
+                className="flex items-center justify-center bg-white/5 text-neutral-50 font-bold text-base md:text-lg py-4 px-8 rounded-full border border-white/10 hover:bg-white/10 active:scale-[0.98] transition-all"
               >
                 Voltar
               </button>
@@ -236,7 +232,7 @@ export default function Home() {
             {currentSlide < slides.length - 1 ? (
               <button
                 onClick={handleNext}
-                className="border border-transparent col-start-2 bg-white text-black font-semibold text-base md:text-lg py-3 md:py-4 px-6 md:px-8 rounded-full hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-medium"
+                className="col-start-2 bg-brand-gradient text-white font-bold text-base md:text-lg py-4 px-8 rounded-full hover:scale-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg glow-cyan"
               >
                 Próximo
                 <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -244,7 +240,7 @@ export default function Home() {
             ) : (
               <Link
                 href="/register"
-                className="border border-transparent col-start-2 bg-white text-black font-semibold text-base md:text-lg py-3 md:py-4 px-6 md:px-8 rounded-full hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-medium"
+                className="col-start-2 bg-brand-gradient text-white font-bold text-base md:text-lg py-4 px-8 rounded-full hover:scale-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg glow-cyan"
               >
                 Começar
                 <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
