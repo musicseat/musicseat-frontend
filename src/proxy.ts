@@ -26,7 +26,7 @@ export default function proxy(request: NextRequest) {
 
   if (isAuthenticated && publicRoute?.whenAuthenticated === 'redirect') {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = '/feed'; // MusicSeat private home
+    redirectUrl.pathname = '/feed'; // MusicSet private home
     return NextResponse.redirect(redirectUrl);
   }
 

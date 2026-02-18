@@ -3,7 +3,7 @@ import { DM_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MusicSeat",
+  title: "MusicSet",
 };
 
 const dmSans = DM_Sans({

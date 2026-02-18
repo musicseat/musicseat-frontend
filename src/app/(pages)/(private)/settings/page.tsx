@@ -8,7 +8,7 @@ const sections = [
   { icon: Lock, label: 'Privacidade', description: 'Gerencie quem vê seus posts e interações' },
   { icon: Music, label: 'Preferências Musicais', description: 'Gêneros, instrumentos e gostos' },
   { icon: Shield, label: 'Segurança', description: 'Senha e autenticação em dois fatores' },
-  { icon: CreditCard, label: 'Assinatura', description: 'Gerencie seu plano MusicSeat PRO' },
+  { icon: CreditCard, label: 'Assinatura', description: 'Gerencie seu plano MusicSet PRO' },
 ];
 
 export default function Settings() {
