@@ -8,29 +8,38 @@ const publicRoutes = [
 const REDIRECT_WHEN_NOT_AUTHENTICATED = '/login'
 
 export default function proxy(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  const publicRoute = publicRoutes.find(route => route.path === path);
+  const path = request.nextUrl.pathname
+  const publicRoute = publicRoutes.find(route => route.path === path)
+  const isAuthenticated = request.cookies.get('token') !== undefined
 
-  // NextAuth v4 cookie names
-  const sessionToken =
-    request.cookies.get('next-auth.session-token') ||
-    request.cookies.get('__Secure-next-auth.session-token');
-
-  const isAuthenticated = !!sessionToken;
+  if (!isAuthenticated && publicRoute) {
+    return NextResponse.next()
+  }
 
   if (!isAuthenticated && !publicRoute) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED;
-    return NextResponse.redirect(redirectUrl);
+    const redirectUrl = request.nextUrl.clone()
+
+    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED
+
+    return NextResponse.redirect(redirectUrl)
   }
 
   if (isAuthenticated && publicRoute?.whenAuthenticated === 'redirect') {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = '/feed'; // MusicSet private home
-    return NextResponse.redirect(redirectUrl);
+    const redirectUrl = request.nextUrl.clone()
+
+    redirectUrl.pathname = '/'
+
+    return NextResponse.redirect(redirectUrl)
   }
 
-  return NextResponse.next();
+  if (isAuthenticated && !publicRoute) {
+    //checar se o jwt está expirado
+    //se sim, remover o cookie e redirecionar para a página de login
+
+    return NextResponse.next()
+  }
+
+  return NextResponse.next()
 }
 
 export const config: MiddlewareConfig = {

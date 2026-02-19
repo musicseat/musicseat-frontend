@@ -7,11 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { signIn } from "next-auth/react";
 
 import logo from "@/../public/images/musicset-icon-white.svg";
 
-import { registerUser } from "@/actions/auth";
 import { RegisterData, registerSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,37 +31,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: RegisterData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // Mocking the FormData expected by the action for compatibility
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => formData.append(key, value as string));
 
-      const result = await registerUser(null, formData);
-
-      if (result.error) {
-        setError(result.error);
-      } else {
-        // Log in automatically after registration
-        const loginResult = await signIn("credentials", {
-          email: data.email,
-          password: data.password,
-          redirect: false,
-        });
-
-        if (loginResult?.error) {
-          setError("Conta criada, mas erro ao fazer login automático. Tente entrar manualmente.");
-        } else {
-          router.push("/feed");
-          router.refresh();
-        }
-      }
-    } catch (err) {
-      setError("Ocorreu um erro ao criar sua conta. Tente novamente.");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (

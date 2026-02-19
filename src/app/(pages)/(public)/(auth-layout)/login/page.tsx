@@ -11,7 +11,6 @@ import { useRef, useState } from "react";
 
 import { LoginData, loginSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
@@ -54,24 +53,6 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginData) => {
     setIsLoading(true);
     setError(null);
-    try {
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError("Email ou senha inválidos. Tenta de novo?");
-      } else {
-        router.push("/feed");
-        router.refresh();
-      }
-    } catch (err) {
-      setError("Ocorreu um erro inesperado. Tenta daqui a pouco?");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
